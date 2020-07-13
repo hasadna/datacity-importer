@@ -1,0 +1,25 @@
+{
+    "kinds": [
+        {
+            "name": "datacity",
+            "display": "DataCity",
+            "dgp": true,
+            "fields": [
+            ]
+        }
+    ],
+    "theme": {
+        "primary": "#333",
+        "primary_dark": "#222",
+        "secondary": "#fff"
+    },
+    "homepage": "https://www.datacity.org/",
+    "taskDescription": "תיאור המאגר - בפרט שם הרשות, סוג המידע ושנה רלוונטית",
+    "dateFormats": [
+        {"display": "Automatic",                           "format": "auto"},
+        {"display": "Automatic - YMD",                     "format": "auto_ymd"},
+        {"display": "Automatic - DMY",                     "format": "auto_dmy"},
+        {"display": "Automatic - YDM",                     "format": "auto_ydm"},
+        {"display": "Automatic - MDY",                     "format": "auto_mdy"}
+    ]
+}

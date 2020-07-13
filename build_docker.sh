@@ -1,2 +1,2 @@
-docker build . -t hasadna/datacity-importer:latest --cache-from hasadna/datacity-importer:latest && \
-docker push hasadna/datacity-importer:latest
+docker build . -t hasadna/datacity-dgp-importer:latest && \
+docker push hasadna/datacity-dgp-importer:latest

@@ -1,15 +1,15 @@
-dist: trusty
-sudo: required
 language: python
 python:
-- '3.6'
+- 3.6
+sudo: required
 services:
 - docker
 script:
-- docker login -u "${DOCKER_USERNAME}" -p "${DOCKER_PASSWORD}"
-- docker pull hasadna/datacity-importer || true
-- "./build_docker.sh"
-env:
-  global:
-  - secure: i+YS7LgAvJVj0kppd2gfhwZCKvyw9GT4vSoZ6HdICYvWswnt/vGTVvgm88mSnHGfW7zda36a04v9VZD2l5r2i68yD7Pd/oZTgbG7gqh+OWpoRwesxCucaxIpVFLP+Rzdy/HJPjybwKIlS+8sLcu3P2ijzOljZAwqE3GKxA4ALXnMxwlJnVHxK1itu6YwA95PlnwirF7fnE4CV58q278B1PxUnkTabZBYtpVd65ChR8wTo4LF1Kjz1NAxUYhmvjJyAWRkcbobSep47fxJF6lmxH7MvIgT5cOIfZ6pBqP5qB7IkpA+1a0Myue5ldNVJ6GLpS/YXVVlojOeXA+gb8GCQq1JsB5YBbRsecnJoVEhg5x/f1x/RZm+MMa91TsQJL8ist2uOGIgHOb59wU1xhwKbF84/TgVrePZl4l9CzqW2cNoAiarhvPP3HqfnQLKMwcKScLZ/M4q71X7EKR5MHUc2n6jd4SLYI0zAPTA2tcz42zJaD/3Lo1nfvcufmupEWbcvZ+bC1ltRqumrn464S3j/bOXlZNyKDZaLozxKwHgvOxAk5iJzw5CZ7DOfpOxv5YAZ+DUE6jWdRtIwDhUfHsUrreT5v9lbm2Ci1eZzhCeWXqf+Exr/uzxXEVorwYhwGfydONnAclsznryKQ/5UscbAAgDcx3D9tm4YwopIs5JaaE=
-  - secure: dO9ubKUWg5i/yw5jhRWxmNzMO+Lpt7Yu0puHBcYC2hZmP4BhOynQBpZXAIzjFBnIyrXZTuwANeHO79c2eyfFfhxGhwgvv6XJnbaQAjlT+2fzWcyjf78YqScopRExwp0uE0XSWzBEChcVC+oG8+HiZ4gezJHP2rry886frW5Uf3uN0duFJbMDXteeGWacmGPrrHidpjyc/7Q2K2IxZhIJGMi+SDIP/YcT4zBx+aGdVHGEl3hK+X5PjlAm7VEL6RwT+16m0XUENjBqHn1DG0ygHig6hxZDwP/fxjJMijG81TYJo+POwbWp7u7rR2LbzG6kYjlIk7vUOsQLJ8bZvQG5/HxWQ+Q0hPSXL/45ksXz1xgo1DWMQdooOnj+nkgFTNfu6b10G5pneRXweczI+ZhZ5l/23bkaxxavaJir7A+HRSeTbZBQMtpLCtcBHXUhXJ3X0i/HN5gmRakvrH40vdl3if+8sl9crQQqZBxai2uuOHhw5hz8Ez6Cxp+spF1ljAC8cricceM68cqp59apfKYZWl7Jgew/z7ByLGtKJ0GDOeg9ROyAYhhDXD0QJ6Zuwpqq+UMWc1RJH+6RAt19Ymvx5FeGiR3m2Tipii4ZRWcSLDjRfIQmFhZF5gtw9YOs76fE2q7cKnLMAp0mlLpKzjRLZBCmZA/HAWKGXKXGX2wDawk=
+- bash .travis.sh script
+deploy:
+  skip_cleanup: true
+  provider: script
+  script: bash .travis.sh deploy
+  on:
+    all_branches: true
+    condition: $TRAVIS_PULL_REQUEST = "false"
