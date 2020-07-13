@@ -9,6 +9,7 @@ if [ "${1}" == "script" ]; then
 
 elif [ "${1}" == "deploy" ]; then
     TAG="${TRAVIS_TAG:-${TRAVIS_COMMIT}}"
+    docker login -u "${DOCKER_USERNAME}" -p "${DOCKER_PASSWORD}" &&\
     docker tag "${DOCKER_IMAGE}:latest" "${DOCKER_IMAGE}:${TAG}" &&\
     docker push "${DOCKER_IMAGE}:latest" &&\
     docker push "${DOCKER_IMAGE}:${TAG}"
