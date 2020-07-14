@@ -4,8 +4,7 @@ DOCKER_IMAGE=hasadna/datacity-dgp-importer
 
 if [ "${1}" == "script" ]; then
     docker pull "akariv/dgp-app:latest"
-    docker pull "${DOCKER_IMAGE}:latest"
-    ! docker build --cache-from "${DOCKER_IMAGE}:latest" -t "${DOCKER_IMAGE}:latest" . && exit 1
+    ! docker build -t "${DOCKER_IMAGE}:latest" . && exit 1
     exit 0
 
 elif [ "${1}" == "deploy" ]; then
