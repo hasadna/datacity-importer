@@ -8,7 +8,7 @@ COPY datacity_server datacity_server
 COPY setup.py .
 
 RUN pip install . 
-RUN mv operators/dgp_kind operators/datacity
+RUN mv dags/operators/dgp_kind dags/operators/datacity
 # # COPY migrate.py .
 # # COPY trigger.py .
 # COPY backup backup
