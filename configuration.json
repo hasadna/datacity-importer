@@ -1,7 +1,7 @@
 {
     "kinds": [
         {
-            "name": "datacity",
+            "name": "dgp_kind",
             "display": "DataCity",
             "dgp": true,
             "fields": [
