@@ -9,9 +9,9 @@
         }
     ],
     "theme": {
-        "primary": "#ddd",
-        "primary_dark": "#bbb",
-        "secondary": "#000"
+        "primary": "#333",
+        "primary_dark": "#222",
+        "secondary": "#fff"
     },
     "homepage": "https://www.datacity.org/",
     "taskDescription": "תיאור המאגר - בפרט שם הרשות, סוג המידע ושנה רלוונטית",
