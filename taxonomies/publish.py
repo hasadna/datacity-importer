@@ -2,11 +2,12 @@ import os
 
 from sqlalchemy import create_engine
 
-from dataflows import Flow, conditional, add_field, append_to_primary_key
+from dataflows import Flow, conditional, add_field
 
 from dgp.core.base_enricher import enrichments_flows, BaseEnricher
 from dgp.config.consts import CONFIG_TAXONOMY_CT
-from dgp_server.publish_flow import publish_flow
+from dgp_server.publish_flow import publish_flow, append_to_primary_key
+
 
 engine = create_engine(os.environ['DATASETS_DATABASE_URL'])
 
