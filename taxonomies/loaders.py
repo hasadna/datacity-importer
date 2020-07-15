@@ -67,6 +67,7 @@ class SharepointJson(BaseAnalyzer):
                 # delete_fields(['Fields'])
             )
 
-analyzers = [
-    SharepointJson,
-]
+def analyzers(*_):
+    return [
+        SharepointJson,
+    ]
