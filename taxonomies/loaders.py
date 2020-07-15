@@ -1,4 +1,5 @@
 from dgp.core import BaseDataGenusProcessor, BaseAnalyzer, Validator, Required
+from dgp.core.base_enricher import enrichments_flows, BaseEnricher
 from dgp.config.consts import CONFIG_JSON_PROPERTY, CONFIG_HEADER_FIELDS,\
     RESOURCE_NAME, CONFIG_FORMAT
 
