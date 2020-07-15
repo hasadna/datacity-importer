@@ -67,9 +67,6 @@ class SharepointJson(BaseAnalyzer):
                 # delete_fields(['Fields'])
             )
 
-
-def flows(config, context):
-    return enrichments_flows(
-        config, context,
-        SharepointJson,
-    )
+analyzers = [
+    SharepointJson,
+]
