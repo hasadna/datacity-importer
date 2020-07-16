@@ -5,7 +5,7 @@ from sqlalchemy import create_engine
 from dataflows import Flow, conditional, add_field
 
 from dgp.core.base_enricher import enrichments_flows, BaseEnricher
-from dgp.config.consts import CONFIG_TAXONOMY_CT
+from dgp.config.consts import RESOURCE_NAME, CONFIG_TAXONOMY_CT
 from dgp_server.publish_flow import publish_flow, append_to_primary_key
 
 
