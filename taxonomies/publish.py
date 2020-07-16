@@ -28,7 +28,7 @@ class MissingColumnsAdder(BaseEnricher):
                 conditional(
                     self.no_such_field(ct['name']),
                     Flow(
-                        add_field(ct['name'], ct['dataType'], '-' if ct.get('unique') else None),
+                        add_field(ct['name'], ct['dataType'], '-' if ct.get('unique') else None, resources=RESOURCE_NAME),
                         append_to_primary_key(ct['name']) if ct.get('unique') else None
                     )
                 )
