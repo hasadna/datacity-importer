@@ -1,24 +1,23 @@
+_common_:
+  title: _common_
+  loading_module: loaders.py
 muni-budgets:
   title: תקציב
   column_types: muni-budgets/column_types.json
   processing_module: muni-budgets/process.py
   publishing_module: publish.py
-  loading_module: loaders.py
 muni-procurement:
   title: תהליכי רכש/השמה
   column_types: muni-procurement/column_types.json
   processing_module: muni-procurement/process.py
   publishing_module: publish.py
-  loading_module: loaders.py
 muni-businesses:
   title: מאגר עסקים
   column_types: muni-businesses/column_types.json
   processing_module: muni-businesses/process.py
   publishing_module: publish.py
-  loading_module: loaders.py
 schools:
   title: מוסדות חינוך
   column_types: schools/column_types.json
   processing_module: schools/process.py
   publishing_module: publish.py
-  loading_module: loaders.py
