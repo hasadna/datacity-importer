@@ -78,7 +78,16 @@
         "description": "השלב התקצובי, למשל: מתוכנן, מאושר, מבוצע וכו׳",
         "dataType": "string",
         "unique": true,
-        "mandatory": true
+        "mandatory": true,
+        "options": {
+            "constraints": {
+                "enum": [
+                    "מקןרי",
+                    "מאושר",
+                    "ביצוע"
+                ] 
+            }
+        }
     },
     {
         "name": "direction:code",

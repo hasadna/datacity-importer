@@ -21,3 +21,9 @@ schools:
   column_types: schools/column_types.json
   processing_module: schools/process.py
   publishing_module: publish.py
+# expenses:
+#   title: הוצאות
+#   column_types: expenses/column_types.json
+#   processing_module: expenses/process.py
+#   publishing_module: publish.py
+  
