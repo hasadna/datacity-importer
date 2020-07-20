@@ -23,18 +23,27 @@ class MissingColumnsAdder(BaseEnricher):
         return func
 
     def postflow(self):
-        return Flow(
-            *[
-                conditional(
-                    self.no_such_field(ct['name']),
-                    Flow(
-                        add_field(ct['name'], ct['dataType'], '-' if ct.get('unique') else None, resources=RESOURCE_NAME),
-                        append_to_primary_key(ct['name']) if ct.get('unique') else None
-                    )
+        steps = []
+        for ct in self.config.get(CONFIG_TAXONOMY_CT):
+            name = ct['name'].replace(':', '-')
+            dataType = ct['dataType']
+            unique = ct.get('unique')
+            if unique:
+                flow = Flow(
+                    add_field(name, dataType, '-', resources=RESOURCE_NAME),
+                    append_to_primary_key(name)
                 )
-                for ct in self.config.get(CONFIG_TAXONOMY_CT)
-            ]
-        )
+            else:
+                flow = Flow(
+                    add_field(name, dataType, None, resources=RESOURCE_NAME),
+                )
+            steps.append(
+                conditional(
+                    self.no_such_field(name),
+                    flow
+                )
+            )
+        return Flow(*steps)
 
 
 class DBWriter(BaseEnricher):
