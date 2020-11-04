@@ -31,5 +31,5 @@ def flows(config, context):
         config, context,
         FilterEmptyCodes,
         MunicipalityNameToCodeEnricher,
-        SelectLatestProcessEnricher,
+        # SelectLatestProcessEnricher,
     )
