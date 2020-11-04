@@ -16,13 +16,13 @@ class SelectLatestProcessEnricher(DuplicateRemover):
     ORDER_BY_KEY = '{process-publication-date}'
 
 
-VALID_CODES = re.compile('[0-9/]+')
+VALID_CODES = re.compile('[-.א-ת0-9/]+')
 
 
 class FilterEmptyCodes(FilterEmptyFields):
 
     FIELDS_TO_CHECK = {
-        'process-code': lambda v: VALID_CODES.fullmatch(v)
+        'process-code': lambda v: isinstance(v, str) and v.strip()
     }
 
 
