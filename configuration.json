@@ -13,7 +13,7 @@
         "primary_dark": "#222",
         "secondary": "#fff"
     },
-    "homepage": "https://www.datacity.org/",
+    "homepage": "https://www.datacity.org.il/",
     "taskDescription": "תיאור המאגר - בפרט שם הרשות, סוג המידע ושנה רלוונטית",
     "dateFormats": [
         {"display": "Automatic",                           "format": "auto"},
