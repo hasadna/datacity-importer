@@ -7,5 +7,7 @@ COPY taxonomies taxonomies
 COPY datacity_server datacity_server
 COPY setup.py .
 
+COPY requirements.dev.txt .
 RUN sudo pip install -U -r requirements.dev.txt
+
 RUN pip install . 
