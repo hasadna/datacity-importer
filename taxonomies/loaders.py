@@ -7,6 +7,7 @@ from dataflows import Flow, add_field, delete_fields
 
 import tabulator
 import ijson
+from pyquery import PyQuery as pq
 
 
 CONFIG_DATACITY_EXTRA_HEADERS = 'datacity.extra_headers'
@@ -67,7 +68,50 @@ class SharepointJson(BaseAnalyzer):
                 # delete_fields(['Fields'])
             )
 
+
+class HTMLTableURLExtractor(BaseAnalyzer):
+
+    REQUIRES = Validator(
+        Required(CONFIG_FORMAT)
+    )
+
+    URL_FIELD = 'extracted_url'
+
+    def run(self):
+
+        if self.config.get(CONFIG_FORMAT) == 'html':
+            self.config.set('source.raw_html', True)
+            headers = self.config.get(CONFIG_HEADER_FIELDS)
+            headers.append(self.URL_FIELD)
+            self.config.set(CONFIG_HEADER_FIELDS, headers)
+
+    def clean_html_values(self):
+        def func(row):
+            is_set = False
+            for k, v in row.items():
+                if isinstance(v, str):
+                    if '<' in v:
+                        row[k] = pq(v).text()
+                        if not is_set:
+                            anchors = pq('<div>' + v + '</div>').find('a')
+                            if len(anchors) > 0:
+                                url = anchors[0].attrib.get('href')
+                                if url:
+                                    row[self.URL_FIELD] = url
+                                    is_set = True
+
+        return func
+
+    def flow(self):
+        if self.config.get('source.raw_html'):
+            return Flow(
+                add_field(self.URL_FIELD, 'string'),
+                self.clean_html_values(),
+            )
+
+
 def analyzers(*_):
     return [
         SharepointJson,
+        HTMLTableURLExtractor,
     ]
