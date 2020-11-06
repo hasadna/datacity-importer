@@ -1,0 +1,152 @@
+[
+    {
+        "name": "municipality:code",
+        "title": "מזהה הרשות המקומית",
+        "description": "מזהה משרד הפנים של הרשות המקומית",
+        "dataType": "integer",
+        "unique": true
+    },
+    {
+        "name": "municipality:name",
+        "title": "שם הרשות המקומית",
+        "description": "השם של הרשות המקומית",
+        "dataType": "string",
+        "labelOf": "municipality:code",
+        "mandatory": true
+    },
+    {
+        "name": "city:code",
+        "title": "מזהה הישוב",
+        "description": "מזהה משרד הפנים הישוב בתוך הרשות המקומית",
+        "dataType": "string",
+        "unique": true
+    },
+    {
+        "name": "city:name",
+        "title": "שם הישוב",
+        "description": "שם הישוב בתוך הרשות המקומית",
+        "dataType": "string",
+        "labelOf": "city:code"
+    },
+    {
+        "name": "event:code",
+        "title": "מזהה האירוע",
+        "description": "מזהה ייחודי של האירוע, בהתאם למקור המידע",
+        "dataType": "string",
+        "unique": true
+    },
+    {
+        "name": "event:kind",
+        "title": "סוג האירוע",
+        "description": "סוג האירוע: תרבות, חוג, איסוף גזם, ...",
+        "dataType": "string",
+        "unique": true,
+        "mandatory": true
+    },
+    {
+        "name": "event:title",
+        "title": "כותרת",
+        "description": "שם האירוע",
+        "dataType": "string",
+        "mandatory": true
+    },
+    {
+        "name": "event:description",
+        "title": "תיאור",
+        "description": "תיאור מפורט יותר של המופיע בכותרת",
+        "dataType": "string"
+    },
+    {
+        "name": "event:status",
+        "title": "סטטוס",
+        "description": "סטטוס האירוע, אם רלוונטי",
+        "dataType": "string"
+    },
+    {
+        "name": "event:schedule",
+        "title": "לוז האירוע",
+        "description": "מתי האירוע מתקיים (טקסט חופשי)",
+        "dataType": "string"
+    },
+    {
+        "name": "event:schedule:date",
+        "title": "תאריך האירוע",
+        "description": "מתי האירוע מתקיים (תאריך)",
+        "dataType": "datetime"
+    },
+    {
+        "name": "event:schedule:time",
+        "title": "שעת האירוע",
+        "description": "מתי האירוע מתקיים (שעה)",
+        "dataType": "time"
+    },
+    {
+        "name": "event:schedule:repeating",
+        "title": "האם האירוע מתמשך (או חד פעמי)",
+        "description": "בחירת כן למתמשך",
+        "dataType": "boolean"
+    },
+    {
+        "name": "event:venue",
+        "title": "מיקום האירוע",
+        "description": "היכן האירוע מתקיים",
+        "dataType": "string"
+    },
+    {
+        "name": "event:venue:address",
+        "title": "כתובת מיקום האירוע",
+        "description": "היכן האירוע מתקיים?",
+        "dataType": "string"
+    },
+    {
+        "name": "event:provider",
+        "title": "מפעיל האירוע",
+        "description": "מי מקיים את האירוע?",
+        "dataType": "string"
+    },
+    {
+        "name": "event:price",
+        "title": "עלות האירוע",
+        "description": "עלות האירוע בשקלים",
+        "dataType": "number"
+    },
+    {
+        "name": "event:contact:name",
+        "title": "שם איש קשר",
+        "description": "שם איש קשר",
+        "dataType": "string"
+    },
+    {
+        "name": "event:contact:phone",
+        "title": "טלפון איש קשר",
+        "description": "טלפון איש קשר",
+        "dataType": "string"
+    },
+    {
+        "name": "event:contact:email",
+        "title": "כתובת דוא״ל איש קשר",
+        "description": "כתובת דוא״ל איש קשר",
+        "dataType": "string"
+    },
+    {
+        "name": "event:purchase-link",
+        "title": "לינק לתשלום מקוון",
+        "description": "לינק לתשלום מקוון",
+        "dataType": "string",
+        "options": {
+            "format": "uri"
+        }
+    },
+    {
+        "name": "event:source-link",
+        "title": "קישור לפרסום המקורי",
+        "description": "קישור לפרסום המקורי",
+        "dataType": "string",
+        "options": {
+            "format": "uri"
+        }
+    }
+]
+
+
+

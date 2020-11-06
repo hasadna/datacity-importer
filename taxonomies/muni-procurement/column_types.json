@@ -30,7 +30,6 @@
     },
     {
         "name": "process:code",
-        "name": "process:code",
         "title": "מזהה תהליך הרכש",
         "description": "מזהה ייחודי של תהליך הרכש, בהתאם למקור המידע",
         "dataType": "string",
@@ -182,6 +181,12 @@
         "title": "מסמכים רלוונטיים",
         "description": "רשימת קישורים למסמכים רלוונטיים להליך",
         "dataType": "array"
+    },
+    {
+        "name": "process:source-link",
+        "title": "קישור לפרסום המקורי",
+        "description": "קישור לפרסום המקורי",
+        "dataType": "string"
     }
 ]
 

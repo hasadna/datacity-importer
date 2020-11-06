@@ -1,7 +1,9 @@
+from urllib.parse import urljoin
+
 from dgp.core import BaseDataGenusProcessor, BaseAnalyzer, Validator, Required
 from dgp.core.base_enricher import enrichments_flows, BaseEnricher
 from dgp.config.consts import CONFIG_JSON_PROPERTY, CONFIG_HEADER_FIELDS,\
-    RESOURCE_NAME, CONFIG_FORMAT
+    RESOURCE_NAME, CONFIG_FORMAT, CONFIG_URL
 
 from dataflows import Flow, add_field, delete_fields
 
@@ -78,7 +80,6 @@ class HTMLTableURLExtractor(BaseAnalyzer):
     URL_FIELD = 'extracted_url'
 
     def run(self):
-
         if self.config.get(CONFIG_FORMAT) == 'html':
             self.config.set('source.raw_html', True)
             headers = self.config.get(CONFIG_HEADER_FIELDS)
@@ -86,6 +87,7 @@ class HTMLTableURLExtractor(BaseAnalyzer):
             self.config.set(CONFIG_HEADER_FIELDS, headers)
 
     def clean_html_values(self):
+        base = self.config.get(CONFIG_URL)
         def func(row):
             is_set = False
             for k, v in row.items():
@@ -97,6 +99,7 @@ class HTMLTableURLExtractor(BaseAnalyzer):
                             if len(anchors) > 0:
                                 url = anchors[0].attrib.get('href')
                                 if url:
+                                    url = urljoin(base, url)
                                     row[self.URL_FIELD] = url
                                     is_set = True
 
@@ -105,7 +108,7 @@ class HTMLTableURLExtractor(BaseAnalyzer):
     def flow(self):
         if self.config.get('source.raw_html'):
             return Flow(
-                add_field(self.URL_FIELD, 'string'),
+                add_field(self.URL_FIELD, 'string', resources=RESOURCE_NAME),
                 self.clean_html_values(),
             )
 
