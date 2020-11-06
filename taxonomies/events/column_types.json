@@ -57,6 +57,18 @@
         "dataType": "string"
     },
     {
+        "name": "event:target:audience",
+        "title": "קהל יעד",
+        "description": "לאיזה קהל יעד מכוון האירוע",
+        "dataType": "string"
+    },
+    {
+        "name": "event:target:age-group",
+        "title": "קבוצת גיל",
+        "description": "לאיזו קבוצת גיל מכוון האירוע",
+        "dataType": "string"
+    },
+    {
         "name": "event:status",
         "title": "סטטוס",
         "description": "סטטוס האירוע, אם רלוונטי",
