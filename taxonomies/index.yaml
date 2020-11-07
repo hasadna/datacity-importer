@@ -26,6 +26,11 @@ events:
   column_types: events/column_types.json
   processing_module: events/process.py
   publishing_module: publish.py
+expenses:
+  title: הוצאות
+  column_types: expenses/column_types.json
+  processing_module: expenses/process.py
+  publishing_module: publish.py
 # expenses:
 #   title: הוצאות
 #   column_types: expenses/column_types.json

@@ -1,0 +1,180 @@
+[
+    {
+        "name": "payer:code",
+        "title": "מזהה הגורם המשלם",
+        "description": "מספר תאגיד, אם קיים, של הגורם המשלם",
+        "dataType": "string"
+    },
+    {
+        "name": "payer:title",
+        "title": "שם הגורם המשלם",
+        "description": "למשל - ממשלת ישראל, עירייה כלשהי, שם חברה ממשלתית וכו׳",
+        "dataType": "string",
+        "labelOf": "payer:code",
+        "mandatory": true,
+        "unique": true
+    },
+    {
+        "name": "payee:code",
+        "title": "מזהה הגורם המקבל",
+        "description": "מספר תאגיד, אם קיים, של הגורם המקבל",
+        "dataType": "string"
+    },
+    {
+        "name": "payee:title",
+        "title": "שם הגורם המקבל",
+        "description": "למשל - מי קיבל את התמיכה, שם ספק בהתקשרות וכו׳",
+        "dataType": "string",
+        "labelOf": "payee:code",
+        "mandatory": true,
+        "unique": true
+    },
+    {
+        "name": "payee:subject",
+        "title": "נושא",
+        "description": "לאיזה נושא או נושאים קשורה ההוצאה הזו",
+        "dataType": "string"
+    },
+    {
+        "name": "process:code",
+        "title": "מזהה התהליך",
+        "description": "מזהה ייחודי של ההוצאה (למשל, מספר הזמנת רכש)",
+        "dataType": "string",
+        "unique": true
+    },
+    {
+        "name": "process:kind",
+        "title": "סוג ההוצאה",
+        "description": "סוג ההוצאה: תמיכה, רכש וכו׳",
+        "dataType": "string",
+        "unique": true,
+        "mandatory": true
+    },
+    {
+        "name": "process:title",
+        "title": "כותרת",
+        "description": "שם ההוצאה",
+        "dataType": "string",
+        "mandatory": true
+    },
+    {
+        "name": "process:description",
+        "title": "תיאור",
+        "description": "תיאור מפורט יותר של המופיע בכותרת",
+        "dataType": "string"
+    },
+    {
+        "name": "process:value-kind",
+        "title": "סוג הסכום",
+        "description": "תיאור הסכום הרלוונטי: מאושר / מבוצע / פעיל / … ",
+        "dataType": "string"
+    },
+    {
+        "name": "process:status",
+        "title": "מצב ההוצאה",
+        "description": "למשל: אושר / פעיל / הסתיים / …",
+        "dataType": "string"
+    },
+    {
+        "name": "process:publication-date",
+        "title": "תאריך פרסום",
+        "description": "מתי ההליך פורסם לציבור?",
+        "dataType": "date",
+        "options": {
+            "format": "auto_ymd"
+        }
+    },
+    {
+        "name": "process:start-date",
+        "title": "תאריך תחילת ההוצאה",
+        "description": "מתי ההוצאה מתחילה/התחילה?",
+        "dataType": "date",
+        "options": {
+            "format": "auto_ymd"
+        }
+    },
+    {
+        "name": "process:end-date",
+        "title": "תאריך סיום ההוצאה",
+        "description": "מתי ההוצאה תסתיים/הסתיימה?",
+        "dataType": "date",
+        "options": {
+            "format": "auto_ymd"
+        }
+    },
+    {
+        "name": "process:approval-year",
+        "title": "שנת אישור",
+        "description": "באיזו שנה ההוצאה אושרה",
+        "dataType": "integer"
+    },
+    {
+        "name": "process:payment-year",
+        "title": "שנת תשלום",
+        "description": "באיזו שנה ההוצאה שולמה",
+        "dataType": "integer"
+    },
+    {
+        "name": "process:last-update-date",
+        "title": "תאריך עדכון אחרון",
+        "description": "מתי פרטי התהליך עודכנו לאחרונה?",
+        "dataType": "date",
+        "options": {
+            "format": "auto_ymd"
+        }
+    },
+    {
+        "name": "process:value",
+        "title": "ערך ההוצאה",
+        "description": "סה״כ הסכום המוקצה להוצאה זו",
+        "dataType": "number",
+        "mandatory": true
+    },
+    {
+        "name": "process:procurer:unit:code",
+        "title": "מזהה יחידה רוכשת",
+        "description": "מזהה יחידה רוכשת",
+        "dataType": "string",
+        "unique": true
+    },
+    {
+        "name": "process:procurer:unit:name",
+        "title": "שם יחידה רוכשת",
+        "description": "שם יחידה רוכשת",
+        "dataType": "string",
+        "labelOf": "process:procurer:unit:code"
+    },
+    {
+        "name": "process:procurer:contact:name",
+        "title": "שם איש קשר",
+        "description": "שם איש קשר",
+        "dataType": "string"
+    },
+    {
+        "name": "process:procurer:contact:phone",
+        "title": "טלפון איש קשר",
+        "description": "טלפון איש קשר",
+        "dataType": "string"
+    },
+    {
+        "name": "process:procurer:contact:email",
+        "title": "כתובת דוא״ל איש קשר",
+        "description": "כתובת דוא״ל איש קשר",
+        "dataType": "string"
+    },
+    {
+        "name": "process:procurement:id",
+        "title": "מזהה הליך האישור הרלוונטי",
+        "description": "למשל: מספר המכרז או ועדת התמיכות",
+        "dataType": "string"
+    },
+    {
+        "name": "process:source-link",
+        "title": "קישור לפרסום המקורי",
+        "description": "קישור לפרסום המקורי",
+        "dataType": "string"
+    }
+]
+
+
+
