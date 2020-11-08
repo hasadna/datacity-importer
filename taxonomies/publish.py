@@ -2,7 +2,7 @@ import os
 
 from sqlalchemy import create_engine
 
-from dataflows import Flow, conditional, add_field
+from dataflows import Flow, conditional, add_field, ResourceWrapper, PackageWrapper
 
 from dgp.core.base_enricher import enrichments_flows, BaseEnricher
 from dgp.config.consts import RESOURCE_NAME, CONFIG_TAXONOMY_CT
@@ -46,6 +46,47 @@ class MissingColumnsAdder(BaseEnricher):
         return Flow(*steps)
 
 
+class EnsureUniqueFields(BaseEnricher):
+
+    def test(self):
+        return True
+
+    def clearMissingValues(self):
+        def func(package: PackageWrapper):
+            for resource in package.pkg.descriptor['resources']:
+                print('MV: RES:', resource['name'])
+                if resource['name'] == RESOURCE_NAME:
+                    print('MV:', resource['schema'].get('missingValues'))
+                    resource['schema']['missingValues'] = ['']
+            yield package.pkg
+            yield from package
+        return func
+
+    def ensure(self, fields):
+        def func(rows: ResourceWrapper):
+            if rows.res.name == RESOURCE_NAME:
+                for row in rows:
+                    for f in fields:
+                        row[f] = row[f] or '-'
+                    print(fields, row)
+                    yield row
+            else:
+                yield from rows
+        return func
+
+    def postflow(self):
+        fields = []
+        for ct in self.config.get(CONFIG_TAXONOMY_CT):
+            name = ct['name'].replace(':', '-')
+            dataType = ct['dataType']
+            unique = ct.get('unique')
+            if unique and dataType == 'string':
+                fields.append(name)
+        return Flow(
+            self.clearMissingValues(),
+            self.ensure(fields)
+        )
+
 class DBWriter(BaseEnricher):
 
     def test(self):
@@ -59,5 +100,6 @@ def flows(config, context):
     return enrichments_flows(
         config, context,
         MissingColumnsAdder,
+        EnsureUniqueFields,
         DBWriter,
     )

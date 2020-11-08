@@ -33,8 +33,7 @@
         "title": "מזהה תהליך הרכש",
         "description": "מזהה ייחודי של תהליך הרכש, בהתאם למקור המידע",
         "dataType": "string",
-        "unique": true,
-        "mandatory": true
+        "unique": true
     },
     {
         "name": "process:kind",
@@ -50,6 +49,7 @@
         "description": "שם התהליך, המוצר או השירות המבוקש",
         "dataType": "string",
         "labelOf": "process:code",
+        "unique": true,
         "mandatory": true
     },
     {
@@ -75,20 +75,13 @@
         "name": "process:publication-date",
         "title": "תאריך פרסום",
         "description": "מתי ההליך פורסם לציבור?",
-        "dataType": "date",
-        "options": {
-            "format": "%d/%m/%Y %H:%M:%S"
-        }
+        "dataType": "date"
     },
     {
         "name": "process:closing-date",
         "title": "תאריך אחרון להגשה",
         "description": "מתי הזדמנות אחרונה להגיש מועמדות/הצעות/השגות?",
-        "dataType": "date",
-        "mandatory": true,
-        "options": {
-            "format": "%d/%m/%Y %H:%M:%S"
-        }
+        "dataType": "date"
     },
     {
         "name": "process:start-date",

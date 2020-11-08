@@ -67,6 +67,7 @@
         "name": "process:value-kind",
         "title": "סוג הסכום",
         "description": "תיאור הסכום הרלוונטי: מאושר / מבוצע / פעיל / … ",
+        "unique": true,
         "dataType": "string"
     },
     {
@@ -106,6 +107,7 @@
         "name": "process:approval-year",
         "title": "שנת אישור",
         "description": "באיזו שנה ההוצאה אושרה",
+        "unique": true,
         "dataType": "integer"
     },
     {
@@ -134,15 +136,15 @@
         "name": "process:procurer:unit:code",
         "title": "מזהה יחידה רוכשת",
         "description": "מזהה יחידה רוכשת",
-        "dataType": "string",
-        "unique": true
+        "dataType": "string"
     },
     {
         "name": "process:procurer:unit:name",
         "title": "שם יחידה רוכשת",
         "description": "שם יחידה רוכשת",
         "dataType": "string",
-        "labelOf": "process:procurer:unit:code"
+        "labelOf": "process:procurer:unit:code",
+        "unique": true
     },
     {
         "name": "process:procurer:contact:name",
@@ -166,7 +168,8 @@
         "name": "process:procurement:id",
         "title": "מזהה הליך האישור הרלוונטי",
         "description": "למשל: מספר המכרז או ועדת התמיכות",
-        "dataType": "string"
+        "dataType": "string",
+        "unique": true
     },
     {
         "name": "process:source-link",

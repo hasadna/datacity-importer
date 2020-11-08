@@ -79,12 +79,25 @@ class HTMLTableURLExtractor(BaseAnalyzer):
 
     URL_FIELD = 'extracted_url'
 
+    field_map = {}
+
     def run(self):
         if self.config.get(CONFIG_FORMAT) == 'html':
             self.config.set('source.raw_html', True)
-            headers = self.config.get(CONFIG_HEADER_FIELDS)
-            headers.append(self.URL_FIELD)
-            self.config.set(CONFIG_HEADER_FIELDS, headers)
+            headers = list(map(self.clean_html_value, self.config.get(CONFIG_HEADER_FIELDS)))
+            new_headers = []
+            for header in headers:
+                if '<' in header:
+                    cleaned = self.clean_html_value(header)
+                    self.field_map[header] = cleaned
+                    new_headers.append(cleaned)
+                else:
+                    new_headers.append(header)
+            new_headers.append(self.URL_FIELD)
+            self.config.set(CONFIG_HEADER_FIELDS, new_headers)
+
+    def clean_html_value(self, v):
+        return pq(v).text()
 
     def clean_html_values(self):
         base = self.config.get(CONFIG_URL)
@@ -93,7 +106,7 @@ class HTMLTableURLExtractor(BaseAnalyzer):
             for k, v in row.items():
                 if isinstance(v, str):
                     if '<' in v:
-                        row[k] = pq(v).text()
+                        row[k] = self.clean_html_value(v)
                         if not is_set:
                             anchors = pq('<div>' + v + '</div>').find('a')
                             if len(anchors) > 0:
@@ -108,6 +121,11 @@ class HTMLTableURLExtractor(BaseAnalyzer):
     def flow(self):
         if self.config.get('source.raw_html'):
             return Flow(
+                *[
+                    add_field(cleaned, 'string', lambda r: r[original], resources=RESOURCE_NAME)
+                    for original, cleaned in self.field_map.items()
+                ],
+                delete_fields(list(self.field_map.keys()), resources=RESOURCE_NAME),
                 add_field(self.URL_FIELD, 'string', resources=RESOURCE_NAME),
                 self.clean_html_values(),
             )

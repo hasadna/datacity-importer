@@ -1,36 +1,31 @@
 _common_:
   title: _common_
   loading_module: loaders.py
+  publishing_module: publish.py
 muni-budgets:
   title: תקציב
   column_types: muni-budgets/column_types.json
   processing_module: muni-budgets/process.py
-  publishing_module: publish.py
 muni-procurement:
   title: תהליכי רכש/השמה
   column_types: muni-procurement/column_types.json
   processing_module: muni-procurement/process.py
-  publishing_module: publish.py
 muni-businesses:
   title: מאגר עסקים
   column_types: muni-businesses/column_types.json
   processing_module: muni-businesses/process.py
-  publishing_module: publish.py
 schools:
   title: מוסדות חינוך
   column_types: schools/column_types.json
   processing_module: schools/process.py
-  publishing_module: publish.py
 events:
   title: אירועים
   column_types: events/column_types.json
   processing_module: events/process.py
-  publishing_module: publish.py
 expenses:
   title: הוצאות
   column_types: expenses/column_types.json
   processing_module: expenses/process.py
-  publishing_module: publish.py
 # expenses:
 #   title: הוצאות
 #   column_types: expenses/column_types.json

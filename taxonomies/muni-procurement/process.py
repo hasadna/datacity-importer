@@ -22,7 +22,7 @@ VALID_CODES = re.compile('[-.א-ת0-9/]+')
 class FilterEmptyCodes(FilterEmptyFields):
 
     FIELDS_TO_CHECK = {
-        'process-code': lambda v: isinstance(v, str) and v.strip()
+        'process-title': lambda v: isinstance(v, str) and v.strip()
     }
 
 
