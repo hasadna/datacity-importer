@@ -54,9 +54,7 @@ class EnsureUniqueFields(BaseEnricher):
     def clearMissingValues(self):
         def func(package: PackageWrapper):
             for resource in package.pkg.descriptor['resources']:
-                print('MV: RES:', resource['name'])
                 if resource['name'] == RESOURCE_NAME:
-                    print('MV:', resource['schema'].get('missingValues'))
                     resource['schema']['missingValues'] = ['']
             yield package.pkg
             yield from package
@@ -68,7 +66,6 @@ class EnsureUniqueFields(BaseEnricher):
                 for row in rows:
                     for f in fields:
                         row[f] = row[f] or '-'
-                    print(fields, row)
                     yield row
             else:
                 yield from rows

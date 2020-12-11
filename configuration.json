@@ -21,5 +21,8 @@
         {"display": "Automatic - DMY",                     "format": "auto_dmy"},
         {"display": "Automatic - YDM",                     "format": "auto_ydm"},
         {"display": "Automatic - MDY",                     "format": "auto_mdy"}
-    ]
+    ],
+    "features": {
+        "forcePrivate": false
+    }
 }

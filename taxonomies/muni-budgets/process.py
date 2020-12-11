@@ -1,4 +1,5 @@
 from pathlib import Path
+import re
 
 from dataflows import Flow, add_computed_field, delete_fields, \
     printer, set_type
@@ -10,10 +11,12 @@ from dgp.config.consts import RESOURCE_NAME
 from datacity_server.processors import MunicipalityNameToCodeEnricher, FilterEmptyFields
 
 
+CODE_RE = re.compile('[0-9]{10,15}')
+
 class FilterEmptyCodes(FilterEmptyFields):
 
     FIELDS_TO_CHECK = {
-        'card-code': lambda v: len(v) >= 10
+        'card-code': lambda v: v and CODE_RE.match(v.strip())
     }
 
     def postflow(self):

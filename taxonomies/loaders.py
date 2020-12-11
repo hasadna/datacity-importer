@@ -84,7 +84,7 @@ class HTMLTableURLExtractor(BaseAnalyzer):
     def run(self):
         if self.config.get(CONFIG_FORMAT) == 'html':
             self.config.set('source.raw_html', True)
-            headers = list(map(self.clean_html_value, self.config.get(CONFIG_HEADER_FIELDS)))
+            headers = self.config.get(CONFIG_HEADER_FIELDS)
             new_headers = []
             for header in headers:
                 if '<' in header:
@@ -118,11 +118,18 @@ class HTMLTableURLExtractor(BaseAnalyzer):
 
         return func
 
+    def replace_field(self, original, cleaned):
+        def f(original):
+            def _f(r):
+                return r[original]
+            return _f
+        return add_field(cleaned, 'string', f(original), resources=RESOURCE_NAME)    
+
     def flow(self):
         if self.config.get('source.raw_html'):
             return Flow(
                 *[
-                    add_field(cleaned, 'string', lambda r: r[original], resources=RESOURCE_NAME)
+                    self.replace_field(original, cleaned)
                     for original, cleaned in self.field_map.items()
                 ],
                 delete_fields(list(self.field_map.keys()), resources=RESOURCE_NAME),
