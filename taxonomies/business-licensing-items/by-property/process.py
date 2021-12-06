@@ -21,6 +21,8 @@ class LicensingItemCodeFixer(BaseEnricher):
         return True
 
     def fix_code(self, code):
+        import sys
+        print(f'Fixing code {code}', file=sys.stderr)
         if not code:
             return None
         code = str(code).strip()
