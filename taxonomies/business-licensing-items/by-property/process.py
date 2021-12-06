@@ -34,7 +34,7 @@ class LicensingItemCodeFixer(BaseEnricher):
 
     def work(self):
         return Flow(
-            set_type('property-code', 'string', transform=lambda v: self.fix_code(v), resources=RESOURCE_NAME),
+            set_type('property-code', type='string', transform=lambda v: self.fix_code(v), resources=RESOURCE_NAME),
         )
 
     def postflow(self):
