@@ -83,3 +83,36 @@ class FilterEmptyFields(BaseEnricher):
 
     def postflow(self):
         return Flow(self.work())
+
+
+class FillInDefaults(BaseEnricher):
+
+    DEFAULT_FIELD_VALUES = {}
+
+    def __init__(self, *args):
+        super().__init__(*args)
+        self.fields = self.DEFAULT_FIELD_VALUES
+
+    def test(self):
+        return True
+
+    def fillIn(self, row):
+        for field, default_value in self.fields.items():
+            if field not in row:
+                continue
+            if row[field] is None:
+                row[field] = default_value
+        return row
+
+    def work(self):
+        def func(package):
+            yield package.pkg
+            for i, res in enumerate(package):
+                if i != len(package.pkg.resources) - 1:
+                    yield res
+                else:
+                    yield map(self.fillIn, res)
+        return func
+
+    def postflow(self):
+        return Flow(self.work())

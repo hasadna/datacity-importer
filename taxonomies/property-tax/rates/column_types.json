@@ -40,8 +40,7 @@
         "name": "property:tax-code:name",
         "title": "שם סוג הנכס לארנונה",
         "description": "שם סיווג הנכס לצרכי ארנונה",
-        "dataType": "string",
-        "unique": true
+        "dataType": "string"
     },
     {
         "name": "property:tax-code:zone-kind",
