@@ -1,0 +1,82 @@
+[
+    {
+        "name": "municipality:code",
+        "title": "מזהה הרשות המקומית",
+        "description": "מזהה משרד הפנים של הרשות המקומית",
+        "dataType": "integer",
+        "unique": true
+    },
+    {
+        "name": "municipality:name",
+        "title": "שם הרשות המקומית",
+        "description": "השם של הרשות המקומית",
+        "dataType": "string",
+        "labelOf": "municipality:code",
+        "mandatory": true
+    },
+    {
+        "name": "city:code",
+        "title": "מזהה הישוב",
+        "description": "מזהה משרד הפנים הישוב בתוך הרשות המקומית",
+        "dataType": "string",
+        "unique": true
+    },
+    {
+        "name": "city:name",
+        "title": "שם הישוב",
+        "description": "שם הישוב בתוך הרשות המקומית",
+        "dataType": "string",
+        "labelOf": "city:code"
+    },
+    {
+        "name": "property:tax-code:id",
+        "title": "מזהה סוג הנכס לארנונה",
+        "description": "קוד סיווג הנכס לצרכי ארנונה",
+        "dataType": "string",
+        "mandatory": true,
+        "unique": true
+    },
+    {
+        "name": "property:tax-code:name",
+        "title": "שם סוג הנכס לארנונה",
+        "description": "שם סיווג הנכס לצרכי ארנונה",
+        "dataType": "string",
+        "unique": true
+    },
+    {
+        "name": "property:tax-code:zone-kind",
+        "title": "סוג איזור הארנונה",
+        "description": "סוג איזור הארנונה",
+        "dataType": "string",
+        "unique": true
+    },
+    {
+        "name": "property:tax-code:zone-id",
+        "title": "שם איזור הארנונה",
+        "description": "שם איזור הארנונה",
+        "dataType": "string",
+        "unique": true
+    },
+    {
+        "name": "property:tax-code:rate",
+        "title": "תעריף הארנונה",
+        "description": "תעריף הארנונה למטר רבוע",
+        "dataType": "number",
+        "mandatory": true,
+        "unique": true
+    },
+    {
+        "name": "property:tax-code:min-area",
+        "title": "שטח מינימלי לתעריף הארנונה",
+        "description": "השטח המינימלי עבורו התעריף תקף",
+        "dataType": "integer",
+        "unique": true
+    },
+    {
+        "name": "property:tax-code:max-area",
+        "title": "שטח מקסימלי לתעריף הארנונה",
+        "description": "השטח המקסימלי עבורו התעדיף תקף",
+        "dataType": "integer",
+        "unique": true
+    }
+]
