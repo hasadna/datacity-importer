@@ -17,10 +17,10 @@ class FilterEmptyCodes(FilterEmptyFields):
 
 class DefaultFiller(FillInDefaults):
     DEFAULT_FIELD_VALUES = {
-        'property:tax-code:zone-kind': '',
-        'property:tax-code:zone-id': '',
-        'property:tax-code:min-area': 0,
-        'property:tax-code:max-area': 1e9
+        'property-tax-code-zone-kind': '',
+        'property-tax-code-zone-id': '',
+        'property-tax-code-min-area': 0,
+        'property-tax-code-max-area': 1e9
     }
 
 
