@@ -35,3 +35,7 @@ tax-code-rates:
   title: צו ארנונה
   column_types: property-tax/rates/column_types.json
   processing_module: property-tax/rates/process.py
+business-licensing-items-by-property:
+  title: פריטי רישוי לפי נכס פיזי
+  column_types: business-licensing-items/by-property/column_types.json
+  processing_module: business-licensing-items/by-property/process.py
