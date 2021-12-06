@@ -32,14 +32,10 @@ class LicensingItemCodeFixer(BaseEnricher):
             code = code[2:]
         return '.'.join(map(str, parts))
 
-    def work(self):
-        return Flow(
-            set_type('property-code', type='string', transform=lambda v: self.fix_code(v), resources=RESOURCE_NAME),
-        )
-
     def postflow(self):
-        return Flow(self.work())
-
+        return Flow(
+            set_type('business-licensing-item-id', type='string', transform=lambda v: self.fix_code(v), resources=RESOURCE_NAME),
+        )
 
 def flows(config, context):
     return enrichments_flows(
