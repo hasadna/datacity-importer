@@ -201,6 +201,7 @@ def main():
     return DF.Flow(
         DF.load(URL, name='law', selector='table[border="1"]', format='html', headers=headers),
         DF.checkpoint('law'),
+        DF.set_type('duration', type='string', transform=str),
         DF.filter_rows(lambda row: row.get('name') is not None),
         DF.filter_rows(lambda row: LICENSING_ITEM_RE.match(row['id']) is not None),
         DF.filter_rows(lambda row: row['id'] != '6.9 ב'),  # רוכלות בעסק הטעון רישוי לפי פרט אחר בתוספת זו
