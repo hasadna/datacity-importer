@@ -6,6 +6,12 @@
             "dgp": true,
             "fields": [
             ]
+        },
+        {
+            "name": "business_licensing_law",
+            "display": "Business Licensing Law",
+            "dgp": false,
+            "admin": true
         }
     ],
     "theme": {
