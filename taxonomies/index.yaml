@@ -26,11 +26,6 @@ expenses:
   title: הוצאות
   column_types: expenses/column_types.json
   processing_module: expenses/process.py
-# expenses:
-#   title: הוצאות
-#   column_types: expenses/column_types.json
-#   processing_module: expenses/process.py
-#   publishing_module: publish.py
 tax-code-rates:
   title: צו ארנונה
   column_types: property-tax/rates/column_types.json
