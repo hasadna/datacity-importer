@@ -43,3 +43,7 @@ business-licensing-items-by-property:
   title: פריטי רישוי לפי נכס פיזי
   column_types: business-licensing-items/by-property/column_types.json
   processing_module: business-licensing-items/by-property/process.py
+business-kind-common-names:
+  title: שמות נפוצים לסוגי בתי עסק
+  column_types: muni-businesses/common-names/column_types.json
+  processing_module: muni-businesses/common-names/process.py
