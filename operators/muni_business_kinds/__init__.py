@@ -224,8 +224,8 @@ def operator(*args):
             main(muni_name),
             DF.update_package(name=f'{muni_slug}-business-kind-rules', title=f'מאפייני עסקים ב{muni_name}'),
             dump_to_ckan(
-                os.environ['CKAN_INSTANCE_HASADNA_URL'],
-                os.environ['CKAN_INSTANCE_HASADNA_API_KEY'],
+                os.environ['CKAN_HOST'],
+                os.environ['CKAN_API_KEY'],
                 'business'
             ),
         ).process()
