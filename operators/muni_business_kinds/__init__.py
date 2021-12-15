@@ -226,7 +226,7 @@ def operator(*args):
             dump_to_ckan(
                 os.environ['CKAN_HOST'],
                 os.environ['CKAN_API_KEY'],
-                'datacity'
+                'datacity',
                 format='json',
             ),
         ).process()
