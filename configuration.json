@@ -12,6 +12,12 @@
             "display": "Business Licensing Law",
             "dgp": false,
             "admin": true
+        },
+        {
+            "name": "muni_business_kinds",
+            "display": "Business Kind Processing",
+            "dgp": false,
+            "admin": true
         }
     ],
     "theme": {
