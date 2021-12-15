@@ -230,6 +230,7 @@ def operator(*args):
             ),
         ).process()
 
+
 if __name__ == '__main__':
     DF.Flow(
         main('באר שבע'),
