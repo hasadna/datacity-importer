@@ -227,6 +227,7 @@ def operator(*args):
                 os.environ['CKAN_HOST'],
                 os.environ['CKAN_API_KEY'],
                 'datacity'
+                format='json',
             ),
         ).process()
 
