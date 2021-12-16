@@ -203,7 +203,7 @@ ORDER BY 1, 2, 3, 4, 5
 def property_tax(muni_name):
     DF.Flow(
         property_tax_rules(muni_name),
-        DF.update_resource(-1, name='business_kind_property_tax_rules'),
+        DF.update_resource(-1, name='business_kind_property_tax_rules', path='business_kind_property_tax_rules.csv'),
         DF.dump_to_path('out/business_kind_property_tax_rules'),
     ).process()
 
