@@ -40,6 +40,6 @@
         "name": "business-licensing-item:id",
         "title": "מזהה פריט רישוי עסק",
         "dataType": "string",
-        "unique": true
+        "mandatory": true
     }
 ]
