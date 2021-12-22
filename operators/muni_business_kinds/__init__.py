@@ -156,7 +156,7 @@ totals AS
           "business-kind",
           count(1) as total
    FROM bk
-   GROUP BY 1, 2),
+   GROUP BY 1, 2)
 SELECT "business-kind",
        "property-tax-code-id",
        "count",
