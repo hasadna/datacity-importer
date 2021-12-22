@@ -150,7 +150,13 @@ bk AS
    FROM raw
    JOIN business_kind_common_names USING ("business-kind-internal",
                                           "municipality-name")
-   GROUP BY 1, 2, 3)
+   GROUP BY 1, 2, 3),
+totals AS
+  (SELECT "municipality-name",
+          "business-kind",
+          count(1) as total
+   FROM bk
+   GROUP BY 1, 2),
 SELECT "business-kind",
        "property-tax-code-id",
        "count",
@@ -158,12 +164,12 @@ SELECT "business-kind",
        "property-tax-code-zone-id",
        "property-tax-code-min-area",
        "property-tax-code-max-area",
-       "property-tax-code-rate"
+       "property-tax-code-rate",
+       "total"
 FROM bk
-JOIN tax_code_rates AS r USING ("property-tax-code-id",
-                                     "municipality-name")
+JOIN tax_code_rates AS r USING ("property-tax-code-id", "municipality-name")
+JOIN totals USING ("municipality-name", "business-kind")
 WHERE "municipality-name"='{muni_name}'
-ORDER BY 1, 2, 3, 4, 5
     '''
     rows = DF.Flow(
         DF.load('env://DATASETS_DATABASE_URL', query=QUERY, name='business_kind_licensing_items'),
@@ -171,7 +177,8 @@ ORDER BY 1, 2, 3, 4, 5
         # DF.printer(),
         DF.dump_to_path('out/business_kind_property_tax'),
     ).results()[0][0]
-    all_kinds = set(r['business-kind'] for r in rows)
+    all_kinds = sorted(set((-r['total'], r['business-kind']) for r in rows))
+    all_kinds = [k[1] for k in all_kinds]
     for kind in all_kinds:
         kind_rows = [r for r in rows if r['business-kind'] == kind]
         zone_kinds = Counter(dict((r['property-tax-code-zone-kind'], r['count']) for r in kind_rows))
