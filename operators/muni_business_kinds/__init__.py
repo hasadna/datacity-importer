@@ -210,7 +210,7 @@ WHERE "municipality-name"='{muni_name}'
 def property_tax(muni_name):
     DF.Flow(
         property_tax_rules(muni_name),
-        DF.update_resource(-1, name='business_kind_property_tax_rules', path='business_kind_property_tax_rules.csv'),
+        DF.update_resource(-1, name='business_kind_property_tax_rules', path='data/business_kind_property_tax_rules.json'),
         DF.dump_to_path('out/business_kind_property_tax_rules', format='json'),
     ).process()
 
@@ -222,8 +222,8 @@ def main(muni_name):
         DF.load('out/business_kind_licensing_rules/datapackage.json'),
         DF.load('out/business_kind_property_tax_rules/datapackage.json'),
         DF.printer(),
-        DF.duplicate('business_kind_licensing_rules', 'business_kind_licensing_rules_csv', target_path='business_kind_licensing_rules.csv'),
-        DF.duplicate('business_kind_property_tax_rules', 'business_kind_property_tax_rules_csv', target_path='business_kind_property_tax_rules.csv'),
+        DF.duplicate('business_kind_licensing_rules', 'business_kind_licensing_rules_csv', target_path='data/business_kind_licensing_rules.csv'),
+        DF.duplicate('business_kind_property_tax_rules', 'business_kind_property_tax_rules_csv', target_path='data/business_kind_property_tax_rules.csv'),
     )
     
 
