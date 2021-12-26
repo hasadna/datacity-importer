@@ -132,7 +132,7 @@ def licensing(muni_name):
         DF.filter_rows(lambda r: r['rules'] is not None and len(r['rules']) > 0),
         combine_rules(),
         # DF.printer(),
-        DF.dump_to_path('out/business_kind_licensing_rules', format='json'),
+        DF.dump_to_path('out/business_kind_licensing_rules'),
     ).process()
 
 def property_tax_rules(muni_name):
@@ -210,8 +210,8 @@ WHERE "municipality-name"='{muni_name}'
 def property_tax(muni_name):
     DF.Flow(
         property_tax_rules(muni_name),
-        DF.update_resource(-1, name='business_kind_property_tax_rules', path='data/business_kind_property_tax_rules.json'),
-        DF.dump_to_path('out/business_kind_property_tax_rules', format='json'),
+        DF.update_resource(-1, name='business_kind_property_tax_rules'),
+        DF.dump_to_path('out/business_kind_property_tax_rules'),
     ).process()
 
 
@@ -224,6 +224,8 @@ def main(muni_name):
         DF.printer(),
         DF.duplicate('business_kind_licensing_rules', 'business_kind_licensing_rules_csv', target_path='data/business_kind_licensing_rules.csv'),
         DF.duplicate('business_kind_property_tax_rules', 'business_kind_property_tax_rules_csv', target_path='data/business_kind_property_tax_rules.csv'),
+        DF.update_resource('business_kind_licensing_rules', path='data/business_kind_licensing_rules.json'),
+        DF.update_resource('business_kind_property_tax_rules', path='data/business_kind_property_tax_rules.json'),
     )
     
 
@@ -243,7 +245,10 @@ def operator(*args):
 
 
 if __name__ == '__main__':
-    DF.Flow(
+    licensing('באר שבע')
+    r = DF.Flow(
+        DF.load('out/business_kind_licensing_rules/datapackage.json'),
         main('באר שבע'),
-        # DF.printer()
-    ).process()
+        # DF.printer(),
+        DF.validate(),
+    ).results()[0][0]
