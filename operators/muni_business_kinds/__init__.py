@@ -221,7 +221,7 @@ def main(muni_name):
     return DF.Flow(
         DF.load('out/business_kind_licensing_rules/datapackage.json'),
         DF.load('out/business_kind_property_tax_rules/datapackage.json'),
-        DF.printer()
+        DF.printer(),
         DF.duplicate('business_kind_licensing_rules', 'business_kind_licensing_rules_csv'),
         DF.duplicate('business_kind_property_tax_rules', 'business_kind_property_tax_rules_csv'),
         DF.update_resource('business_kind_licensing_rules_csv', path='business_kind_licensing_rules.csv'),
