@@ -222,16 +222,14 @@ def main(muni_name):
         DF.load('out/business_kind_licensing_rules/datapackage.json'),
         DF.load('out/business_kind_property_tax_rules/datapackage.json'),
         DF.printer(),
-        DF.duplicate('business_kind_licensing_rules', 'business_kind_licensing_rules_csv'),
-        DF.duplicate('business_kind_property_tax_rules', 'business_kind_property_tax_rules_csv'),
-        DF.update_resource('business_kind_licensing_rules_csv', path='business_kind_licensing_rules.csv'),
-        DF.update_resource('business_kind_property_tax_rules_csv', path='business_kind_property_tax_rules.csv'),
+        DF.duplicate('business_kind_licensing_rules', 'business_kind_licensing_rules_csv', target_path='business_kind_licensing_rules.csv'),
+        DF.duplicate('business_kind_property_tax_rules', 'business_kind_property_tax_rules_csv', target_path='business_kind_property_tax_rules.csv'),
     )
     
 
 def operator(*args):
     for muni_name, muni_slug in MUNICIPALITIES:
-        DF.Flow(
+        dp, _ = DF.Flow(
             main(muni_name),
             DF.update_package(name=f'{muni_slug}-business-kind-rules', title=f'מאפייני עסקים ב{muni_name}'),
             dump_to_ckan(
@@ -241,6 +239,7 @@ def operator(*args):
                 force_format=False,
             ),
         ).process()
+        print(dp.descriptor)
 
 
 if __name__ == '__main__':
