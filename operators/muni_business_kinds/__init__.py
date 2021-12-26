@@ -3,6 +3,7 @@ import dataflows as DF
 from collections import Counter
 from dataflows_ckan import dump_to_ckan
 
+
 MUNICIPALITIES = [
     ('באר שבע', 'beer-sheva'),
 ]
@@ -181,14 +182,18 @@ WHERE "municipality-name"='{muni_name}'
     all_kinds = [k[1] for k in all_kinds]
     for kind in all_kinds:
         kind_rows = [r for r in rows if r['business-kind'] == kind]
-        zone_kinds = Counter(dict((r['property-tax-code-zone-kind'], r['count']) for r in kind_rows))
+        zone_kinds = Counter()
+        for r in kind_rows:
+            zone_kinds.update({r['property-tax-code-zone-kind']: r['count']})
         zone_kind = zone_kinds.most_common(1)[0][0]
         zone_kind_rows = [r for r in kind_rows if r['property-tax-code-zone-kind'] == zone_kind]
         zone_ids = set(r['property-tax-code-zone-id'] for r in zone_kind_rows)
         zones = dict()
         for zone_id in zone_ids:
             zone_id_rows = [r for r in zone_kind_rows if r['property-tax-code-zone-id'] == zone_id]
-            code_ids = Counter(dict((r['property-tax-code-id'], r['count']) for r in zone_id_rows))
+            code_ids = Counter()
+            for r in zone_id_rows:
+                code_ids.update({r['property-tax-code-id']: r['count']})
             code_id = code_ids.most_common(1)[0][0]
             code_id_rows = [r for r in zone_id_rows if r['property-tax-code-id'] == code_id]
             zone_id = zone_id or ''
