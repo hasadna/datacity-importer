@@ -8,6 +8,17 @@ MUNICIPALITIES = [
     ('באר שבע', 'beer-sheva'),
 ]
 
+def all_business_names(muni_name):
+    QUERY = f'''
+        select "business-kind" as business_kind
+        from business_kind_common_names
+        where "municipality-name" = '{muni_name}'
+    '''
+    return [r['business_kind'] for r in DF.Flow(
+        DF.load('env://DATASETS_DATABASE_URL', query=QUERY, name='business_kind_common_names'),
+    ).results()[0][0]]
+
+
 def licensing_items(muni_name):
     QUERY = f'''
         with raw as (
@@ -66,10 +77,12 @@ def combine_rules():
         ('firedpt_track', ('inspection', 'deposition')),
     ])
     def func(rows):
+        print('COMBINE RULES')
         for row in rows:
             rules = row['rules']
             if not rules:
-                return
+                yield {**row, 'rule': {}}
+                continue
             all_rules = [rr for r in row['rules'] if r for rr in r if rr]
             areas = sorted(set(r['area'] for r in all_rules))
             agg_rule = dict()
@@ -98,27 +111,39 @@ def combine_rules():
     return DF.Flow(
         DF.add_field('rule', 'object'),
         func,
-        DF.add_field('area', 'integer', default=lambda r: r['rule'].get('area')),
-        DF.add_field('environment', 'string', default=lambda r: r['rule'].get('environment')),
-        DF.add_field('police', 'string', default=lambda r: r['rule'].get('police')),
-        DF.add_field('ordinance', 'string', default=lambda r: r['rule'].get('ordinance')),
-        DF.add_field('sanitation', 'string', default=lambda r: r['rule'].get('sanitation')),
-        DF.add_field('agriculture', 'string', default=lambda r: r['rule'].get('agriculture')),
-        DF.add_field('fire-dept', 'string', default=lambda r: r['rule'].get('fire-dept')),
-        DF.add_field('firedpt_track', 'string', default=lambda r: r['rule'].get('firedpt_track')),
-        DF.add_field('track', 'string', default=lambda r: r['rule'].get('track')),
-        DF.add_field('duration', 'integer', default=lambda r: r['rule'].get('duration')),
-        DF.add_field('item_ids', 'string', default=lambda r: r['rule'].get('item_ids')),
-        DF.add_field('spec', 'boolean', default=lambda r: r['rule'].get('spec')),
-        DF.add_field('spec_links', 'array', default=lambda r: r['rule'].get('spec_links')),
+        DF.add_field('area', 'integer', default=lambda r: r['rule'].get('area', 0)),
+        DF.add_field('environment', 'string', default=lambda r: r['rule'].get('environment', 'no')),
+        DF.add_field('police', 'string', default=lambda r: r['rule'].get('police', 'no')),
+        DF.add_field('ordinance', 'string', default=lambda r: r['rule'].get('ordinance', 'no')),
+        DF.add_field('sanitation', 'string', default=lambda r: r['rule'].get('sanitation', 'no')),
+        DF.add_field('agriculture', 'string', default=lambda r: r['rule'].get('agriculture', 'no')),
+        DF.add_field('fire-dept', 'string', default=lambda r: r['rule'].get('fire-dept', 'no')),
+        DF.add_field('firedpt_track', 'string', default=lambda r: r['rule'].get('firedpt_track', 'none')),
+        DF.add_field('track', 'string', default=lambda r: r['rule'].get('track', 'none')),
+        DF.add_field('duration', 'integer', default=lambda r: r['rule'].get('duration', 0)),
+        DF.add_field('item_ids', 'string', default=lambda r: r['rule'].get('item_ids', '')),
+        DF.add_field('spec', 'boolean', default=lambda r: r['rule'].get('spec', False)),
+        DF.add_field('spec_links', 'array', default=lambda r: r['rule'].get('spec_links', [])),
         DF.delete_fields(['rules', 'rule']),
     )
+
+def complete_missing_rules(all_names):
+    all_names = set(all_names)
+    def func(rows):
+        for row in rows:
+            all_names.remove(row['business_kind'])
+            yield row
+        print('COMPLETE MISSING RULES', all_names)
+        for name in all_names:
+            yield {'business_kind': name, 'rules': None}
+    return func
 
 def licensing(muni_name):
     licensing_items(muni_name)
     licensing_law()
     business_licensing_law = DF.Flow(DF.load('out/business_licensing_law/datapackage.json')).results()[0][0]
     business_licensing_law = dict((r['id'], r['rules']) for r in business_licensing_law)
+    business_names = all_business_names(muni_name)
     DF.Flow(
         DF.load('out/business_kind_licensing_items/datapackage.json'),
         DF.update_resource(-1, name='business_kind_licensing_rules'),
@@ -130,7 +155,8 @@ def licensing(muni_name):
                 ] if r
             ]),
         DF.delete_fields(['business_licensing_item_id']),
-        DF.filter_rows(lambda r: r['rules'] is not None and len(r['rules']) > 0),
+        complete_missing_rules(business_names),
+        # DF.filter_rows(lambda r: r['rules'] is not None and len(r['rules']) > 0),
         combine_rules(),
         # DF.printer(),
         DF.dump_to_path('out/business_kind_licensing_rules'),
