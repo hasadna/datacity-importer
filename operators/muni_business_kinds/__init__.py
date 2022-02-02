@@ -58,7 +58,7 @@ def licensing_law():
         DF.load('env://DATASETS_DATABASE_URL', table='business_licensing_law', name='business_licensing_law'),
         DF.add_field('rule', 'object', default=lambda r: dict((k, v) for k, v in r.items() if k != 'id')),
         DF.join_with_self('business_licensing_law', ['id'], dict(
-            id=None, rules=dict(name='rule', aggregate='array')
+            id=None, itemname=None, rules=dict(name='rule', aggregate='array')
         )),
         # DF.printer(),
         DF.dump_to_path('out/business_licensing_law'),
@@ -142,7 +142,7 @@ def licensing(muni_name):
     licensing_items(muni_name)
     licensing_law()
     business_licensing_law = DF.Flow(DF.load('out/business_licensing_law/datapackage.json')).results()[0][0]
-    business_licensing_law = dict((r['id'], r['rules']) for r in business_licensing_law)
+    business_licensing_law = dict((r['id'], dict(itemname=r['itemname'], rules=r['rules'])) for r in business_licensing_law)
     business_names = all_business_names(muni_name)
     DF.Flow(
         DF.load('out/business_kind_licensing_items/datapackage.json'),
@@ -151,7 +151,13 @@ def licensing(muni_name):
         DF.add_field('rules', 'array', 
             default=lambda row: [
                 r for r in [
-                    business_licensing_law.get(id) or business_licensing_law.get(id[:-2]) for id in row['business_licensing_item_id']
+                    (business_licensing_law.get(id) or business_licensing_law.get(id[:-2]) or dict()).get('rules') for id in row['business_licensing_item_id']
+                ] if r
+            ]),
+        DF.add_field('itemnames', 'array',
+            default=lambda row: [
+                r for r in [
+                    (business_licensing_law.get(id) or business_licensing_law.get(id[:-2]) or dict()).get('itemname') for id in row['business_licensing_item_id']
                 ] if r
             ]),
         DF.delete_fields(['business_licensing_item_id']),

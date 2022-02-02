@@ -190,7 +190,7 @@ def scrape_specs():
 def main():
     URL = 'https://www.nevo.co.il/law_html/law01/500_849.htm'
     LICENSING_ITEM_RE = re.compile('\d[.\d]+\s*[א-ת]?')
-    headers = ['id', 'name', 'environment', 'police', 'ordinance', 'agriculture', 'sanitation', 'fire-dept', 'track', 'spec', 'duration', 'notes']
+    headers = ['id', 'itemname', 'environment', 'police', 'ordinance', 'agriculture', 'sanitation', 'fire-dept', 'track', 'spec', 'duration', 'notes']
     specs = DF.Flow(
         scrape_specs(),
         DF.checkpoint('uniform-specs'),
@@ -202,7 +202,7 @@ def main():
         DF.load(URL, name='law', selector='table[border="1"]', format='html', headers=headers),
         DF.checkpoint('law'),
         DF.set_type('duration', type='string', transform=str),
-        DF.filter_rows(lambda row: row.get('name') is not None),
+        DF.filter_rows(lambda row: row.get('itemname') is not None),
         DF.filter_rows(lambda row: LICENSING_ITEM_RE.match(row['id']) is not None),
         DF.filter_rows(lambda row: row['id'] != '6.9 ב'),  # רוכלות בעסק הטעון רישוי לפי פרט אחר בתוספת זו
         DF.add_field('rules', 'array', None),
@@ -217,7 +217,7 @@ def main():
         rules(),
         DF.set_type('spec', type='boolean', transform=lambda _, row: row['id'] in spec_links),
         DF.add_field('spec_link', 'string', default=lambda row: spec_links.get(row['id'])),
-        DF.delete_fields(['name', 'notes']),
+        DF.delete_fields(['notes']),
         DF.update_resource(-1, name='business_licensing_law'),
     )
 
