@@ -65,7 +65,7 @@ class EnsureUniqueFields(BaseEnricher):
             if rows.res.name == RESOURCE_NAME:
                 for row in rows:
                     for f in fields:
-                        row[f] = row[f] or '-'
+                        row[f] = row[f] if row[f] not in (None, '') else '-'
                     yield row
             else:
                 yield from rows

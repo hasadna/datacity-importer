@@ -20,30 +20,34 @@ def all_business_names(muni_name):
 
 
 def licensing_items(muni_name):
+    # QUERY = f'''
+    #     with raw as (
+    #         SELECT cn."business-kind" as business_kind,
+    #                pt."municipality-name" as municipality_name,
+    #             split_part("business-licensing-item-id", '.', 1) || '.' ||
+    #             split_part("business-licensing-item-id", '.', 2) || '.' ||
+    #             split_part("business-licensing-item-id", '.', 3) as business_licensing_item_id
+    #         FROM property_tax_business_kinds as pt
+    #         JOIN business_licensing_items_by_property USING ("municipality-name", "property-code")
+    #         JOIN business_kind_common_names as cn ON (pt."business-kind" = cn."business-kind-internal" and pt."municipality-name" = cn."municipality-name")
+    #         where pt."municipality-name" = '{muni_name}'
+    #         and "business-licensing-item-id" != '-'
+    #     ),
+    #     totals as (
+    #         select business_kind, count(1) as total from raw group by 1
+    #     ),
+    #     counts as (
+    #         select business_kind, business_licensing_item_id, count(1) as count from raw group by 1,2
+    #     )
+    #     select business_kind, business_licensing_item_id, (100.0*count)/total as pct
+    #     from counts
+    #     join totals using (business_kind)
+    #     where (1000*count)/total >= 100
+    #     order by 1, 3 desc
+    # '''
     QUERY = f'''
-        with raw as (
-            SELECT cn."business-kind" as business_kind,
-                   pt."municipality-name" as municipality_name,
-                split_part("business-licensing-item-id", '.', 1) || '.' ||
-                split_part("business-licensing-item-id", '.', 2) || '.' ||
-                split_part("business-licensing-item-id", '.', 3) as business_licensing_item_id
-            FROM property_tax_business_kinds as pt
-            JOIN business_licensing_items_by_property USING ("municipality-name", "property-code")
-            JOIN business_kind_common_names as cn ON (pt."business-kind" = cn."business-kind-internal" and pt."municipality-name" = cn."municipality-name")
-            where pt."municipality-name" = '{muni_name}'
-            and "business-licensing-item-id" != '-'
-        ),
-        totals as (
-            select business_kind, count(1) as total from raw group by 1
-        ),
-        counts as (
-            select business_kind, business_licensing_item_id, count(1) as count from raw group by 1,2
-        )
-        select business_kind, business_licensing_item_id, (100.0*count)/total as pct
-        from counts
-        join totals using (business_kind)
-        where (1000*count)/total >= 100
-        order by 1, 3 desc
+        select "business-kind" as business_kind, jsonb_array_elements("business-licensing-item-id") as business_licensing_item_id from business_kind_common_names
+                where "municipality-name"='{muni_name}'
     '''
     DF.Flow(
         DF.load('env://DATASETS_DATABASE_URL', query=QUERY, name='business_kind_licensing_items'),
