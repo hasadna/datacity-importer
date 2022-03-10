@@ -135,10 +135,14 @@ def rules():
         for row in rows:
             areas = sorted(set(r['area'] for r in row['rules']))
             assert len(areas) > 0
+            min_area = None if row['id'] not in ('6.2', '7.5') else 800
+            if min_area is not None:
+                areas = [min_area] + [a for a in areas if a > min_area]
+                # yield {'id': row['id'], 'area': 0}
             rule = {}
             for area in areas:
                 for r in row['rules']:
-                    if r['area'] == area:
+                    if r['area'] == area or (min_area and area <= min_area):
                         rule.update(r)
                 _row = dict()
                 _row.update(row)
@@ -236,5 +240,6 @@ def operator(*args):
 if __name__ == '__main__':
     DF.Flow(
         main(),
+        DF.filter_rows(lambda row: row['id'] in ('6.2', '7.5')),
         DF.printer()
     ).process()
