@@ -139,6 +139,7 @@ def rules():
             if min_area is not None:
                 areas = [min_area] + [a for a in areas if a > min_area]
                 # yield {'id': row['id'], 'area': 0}
+
             rule = {}
             for area in areas:
                 for r in row['rules']:
@@ -147,6 +148,7 @@ def rules():
                 _row = dict()
                 _row.update(row)
                 _row.update(rule)
+                _row['area'] = area
                 yield _row
     return DF.Flow(
         DF.add_field('area', 'integer', -1),
@@ -240,6 +242,6 @@ def operator(*args):
 if __name__ == '__main__':
     DF.Flow(
         main(),
-        DF.filter_rows(lambda row: row['id'] in ('6.2', '7.5')),
+        DF.filter_rows(lambda row: row['id'] in ('6.2', '7.5', '4.7.1')),
         DF.printer()
     ).process()
