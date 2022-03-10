@@ -31,10 +31,22 @@ class Enumerator(BaseEnricher):
         )
 
 
+class FieldSplitter(BaseEnricher):
+
+    def test(self):
+        return True
+
+    def postflow(self):
+        return DF.Flow(
+            DF.set_type('business-licensing-item-id', type='array', transform=lambda v: [x.strip() for x in v.split(',')] if v else []),
+        )
+
+
 def flows(config, context):
     return enrichments_flows(
         config, context,
         MunicipalityNameToCodeEnricher,
         FilterEmptyCodes,
         Enumerator,
+        FieldSplitter
     )

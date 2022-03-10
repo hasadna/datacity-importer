@@ -42,5 +42,11 @@
         "description": "מהות בית העסק, כפי שמוכר לקהל הרחב",
         "dataType": "string",
         "mandatory": true
+    },
+    {
+        "name": "business-licensing-item:id",
+        "title": "מזהה פריט רישוי עסק",
+        "dataType": "string",
+        "mandatory": true
     }
 ]
