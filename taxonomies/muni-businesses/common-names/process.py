@@ -31,14 +31,21 @@ class Enumerator(BaseEnricher):
         )
 
 
-class FieldSplitter(BaseEnricher):
+class LicensingItemProcessor(BaseEnricher):
 
     def test(self):
         return True
 
+    def work(self):
+        def func(row):
+            if row['business-kind-store']:
+                row['business-licensing-item-id'].append('6.2')
+        return func
+
     def postflow(self):
         return DF.Flow(
             DF.set_type('business-licensing-item-id', type='array', transform=lambda v: [x.strip() for x in v.split(',')] if v else []),
+            self.work()
         )
 
 
@@ -48,5 +55,5 @@ def flows(config, context):
         MunicipalityNameToCodeEnricher,
         FilterEmptyCodes,
         Enumerator,
-        FieldSplitter
+        LicensingItemProcessor
     )
