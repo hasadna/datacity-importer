@@ -1,6 +1,5 @@
 FROM akariv/dgp-app:latest
 
-
 COPY requirements.dev.txt .
 RUN sudo pip install -U -r requirements.dev.txt
 
