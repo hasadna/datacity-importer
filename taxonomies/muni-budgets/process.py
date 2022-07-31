@@ -2,7 +2,8 @@ from pathlib import Path
 import re
 
 from dataflows import Flow, add_computed_field, delete_fields, \
-    printer, set_type
+    printer, set_type, validate, schema_validator
+
 
 from dgp.core.base_enricher import ColumnTypeTester, ColumnReplacer, \
         DatapackageJoiner, enrichments_flows, BaseEnricher
@@ -33,6 +34,11 @@ class HandleThousandsValues(ColumnReplacer):
                         if row.get('value-thousands') is not None
                         else None)
 
+    def work(self):
+        return Flow(
+            set_type('value-thousands', type='number', groupChar=',', decimalChar='.', on_error=schema_validator.clear, resources=RESOURCE_NAME),
+            super().work()
+        )
 
 class RecombineCardCode(ColumnReplacer):
 
@@ -48,7 +54,10 @@ class RecombineCardCode(ColumnReplacer):
                     cc.append(row[ct])
             else:
                 break
-        row['card-code'] = ''.join(cc)
+        cc = ''.join(cc)
+        if len(cc) == 9:
+            cc = f'1{cc}'
+        row['card-code'] = cc
 
 
 class CardFunctionalCodeSplitter(ColumnTypeTester):
