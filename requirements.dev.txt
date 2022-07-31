@@ -1,2 +1,1 @@
-tabulator>=1.53.0
-https://github.com/dataspot/dataflows-ckan/archive/refs/heads/main.tar.gz
+dataflows-ckan

@@ -238,12 +238,18 @@
         "mandatory": true,
         "alternatives": [
             ["value-thousands"]
-        ]
+        ],
+        "options": {
+            "groupChar": ","
+        }
     },
     {
         "name": "value-thousands",
         "title": "סכום באלפים",
         "description": "התקציב עצמו, באלפי שקלים חדשים",
-        "dataType": "number"
+        "dataType": "number",
+        "options": {
+            "groupChar": ","
+        }
     }
 ]
