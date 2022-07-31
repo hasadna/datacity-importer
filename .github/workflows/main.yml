@@ -1,6 +1,9 @@
 name: CI
 on:
   push:
+    branches:
+      - main
+  workflow_dispatch:
 jobs:
   build-server:
     runs-on: ubuntu-18.04
