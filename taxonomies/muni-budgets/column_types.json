@@ -36,6 +36,7 @@
         "unique": true,
         "mandatory": true,
         "alternatives": [
+            ["card:code:part1", "card:code:part2"],
             ["card:code:part1", "card:code:part2", "card:code:part3"]
         ]
     },
