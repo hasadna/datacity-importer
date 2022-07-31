@@ -36,12 +36,19 @@ class HandleThousandsValues(ColumnReplacer):
 
 class RecombineCardCode(ColumnReplacer):
 
-    REQUIRED_COLUMN_TYPES = ['card:code:part1', 'card:code:part2', 'card:code:part3']
+    REQUIRED_COLUMN_TYPES = ['card:code:part1', 'card:code:part2']
     PROHIBITED_COLUMN_TYPES = ['card:code']
 
     def operate_on_row(self, row):
-        codes = [row[x.replace(':', '-')] for x in self.REQUIRED_COLUMN_TYPES]
-        row['card-code'] = ''.join(x if x is not None else '' for x in codes)
+        cc = []
+        for i in range(1, 4):
+            ct = f'card-code-part{i}'
+            if ct in row:
+                if row[ct]:
+                    cc.append(row[ct])
+            else:
+                break
+        row['card-code'] = ''.join(cc)
 
 
 class CardFunctionalCodeSplitter(ColumnTypeTester):
