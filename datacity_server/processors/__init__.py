@@ -1,6 +1,4 @@
-import copy
-
-from dataflows import Flow, ResourceWrapper, PackageWrapper, load, dump_to_sql
+from dataflows import Flow, ResourceWrapper, PackageWrapper
 from dgp.core.base_enricher import BaseEnricher, DatapackageJoiner
 from dgp.config.consts import RESOURCE_NAME, CONFIG_PRIMARY_KEY, \
     CONFIG_TAXONOMY_CT, CONFIG_TAXONOMY_ID
@@ -36,18 +34,16 @@ class StreamingDuplicateRemover(BaseEnricher):
             self.remove_dups(key_field_names)
         )
 
-
 class MunicipalityNameToCodeEnricher(DatapackageJoiner):
 
     REQUIRED_COLUMN_TYPES = ['municipality:name']
     PROHIBITED_COLUMN_TYPES = ['municipality:code']
-    REF_DATAPACKAGE = 'http://next.obudget.org/datapackages/' +\
+    REF_DATAPACKAGE = 'https://next.obudget.org/datapackages/' +\
         'lamas-municipal-data/datapackage.json'
     REF_KEY_FIELDS = ['name_municipality']
     REF_FETCH_FIELDS = ['symbol_municipality_2015']
     SOURCE_KEY_FIELDS = ['municipality-name']
     TARGET_FIELD_COLUMNTYPES = ['municipality:code']
-
 
 class FilterEmptyFields(BaseEnricher):
 
