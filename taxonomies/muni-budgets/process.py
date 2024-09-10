@@ -57,6 +57,8 @@ class RecombineCardCode(ColumnReplacer):
         cc = ''.join(cc)
         if len(cc) == 9:
             cc = f'1{cc}'
+        elif len(cc) == 6:
+            cc = f'1{cc}000'
         row['card-code'] = cc
 
 
