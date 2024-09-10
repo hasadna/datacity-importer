@@ -1,1 +1,2 @@
 dataflows-ckan
+pyquery
