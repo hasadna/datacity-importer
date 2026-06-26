@@ -11,4 +11,6 @@ COPY datacity_server datacity_server
 COPY operators dags/operators/
 COPY setup.py .
 
+ENV PYTHONPATH="/app/"
+
 RUN pip install . 
